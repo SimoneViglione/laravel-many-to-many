@@ -32,9 +32,7 @@ class ProjectController extends Controller
         public function create()
         {
             $types = Type::all();
-
             $technologies = Technology::all();
-
                 return view('admin.projects.create', compact('types', 'technologies'));
         }
 
@@ -56,6 +54,10 @@ class ProjectController extends Controller
             }
 
             $newProject = Project::create($validated_data);
+
+            if ($request->has('technologies')) {
+                $newProject->technologies()->attach($request->technologies);
+            }
 
             return redirect()->route('admin.projects.show', ['project' => $newProject->slug])->with('status', 'Progetto creato con successo!');
         }
@@ -81,7 +83,8 @@ class ProjectController extends Controller
         public function edit(project $project)
         {
             $types = Type::all();
-            return view('admin.projects.edit', compact('project', 'types'));
+            $technologies = Technology::all();
+                return view('admin.projects.edit', compact('project', 'types', 'technologies'));
 
         }
 
@@ -92,9 +95,23 @@ class ProjectController extends Controller
          * @param  \App\Models\project  $project
          * @return \Illuminate\Http\Response
          */
-        public function update(Request $request, project $project)
+        public function update(UpdateProjectRequest $request, Project $project)
         {
-            //
+            $validated_data = $request->validated();
+            $validated_data['slug'] = Project::generateSlug($request->title);
+
+            $checkProject = Project::where('slug', $validated_data['slug'])->where('id', '<>', $project->id)->first();
+
+            if ($checkProject) {
+                return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug']);
+            }
+
+            $project->technologies()->sync($request->technologies);
+
+            $project->update($validated_data);
+
+
+            return redirect()->route('admin.projects.show', ['project' => $project->slug])->with('status', 'Progetto modificato con successo!');
         }
 
         /**
