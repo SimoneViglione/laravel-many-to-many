@@ -7,7 +7,7 @@
     <h1>{{$project->title}}</h1>
     <h6><small>Slug: {{$project->slug}}</small></h6>
 
-    <h3>Categoria: {{$project->category?$project->category->name:'Nessuna categoria abbinata'}}</h3>
+    <h3>Categoria: {{$project->type?$project->type->name:'Nessuna categoria abbinata'}}</h3>
 
     @if ($project->cover_image)
         <img class="img-thumbnail" src="{{$project->cover_image}}" alt="{{$project->title}}"/>
