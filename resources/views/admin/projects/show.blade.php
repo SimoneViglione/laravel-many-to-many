@@ -10,7 +10,7 @@
     <h3>Tipo: {{$project->type?$project->type->name:'Nessun tipo abbinato'}}</h3>
 
     @foreach ($project->technologies as $technologies)
-        <span class="badge rounded-pill text-bg-primary">{{$technologies->name}}</span>
+        <span class="badge rounded-pill text-bg-success">{{$technologies->name}}</span>
     @endforeach
 
     @if ($project->cover_image)
