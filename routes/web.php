@@ -29,10 +29,8 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
 
     Route::resource('projects', ProjectController::class)->parameters(['projects' => 'project:slug']);
 
-    // Rotte per il controller TypeController
     Route::resource('types', TypeController::class)->parameters(['types' => 'type:slug']);
 
-    // Rotte per il controller TechnologyController
     Route::resource('technologies', TechnologyController::class)->parameters(['technologies' => 'technology:slug']);
 });
 
