@@ -7,7 +7,7 @@
 </div>
 
 <div class="container">
-    
+
 <table class="table">
     <thead>
       <tr>
@@ -24,7 +24,7 @@
                 <td>{{$project->id}}</td>
                 <td>{{$project->title}}</td>
                 <td>{{$project->slug}}</td>
-                <td>{{$project->category?->name}}</td> 
+                <td>{{$project->type?->name}}</td>
                 <td>
                     <a class="btn btn-primary" href="{{route('admin.projects.show', $project->slug)}}">VEDI</a>
                     <a class="btn btn-warning" href="{{route('admin.projects.edit', $project->slug)}}">MODIFICA</a>
@@ -43,5 +43,5 @@
   </table>
 
 </div>
- 
+
 @endsection
